@@ -19,4 +19,10 @@
         <receiver android:name=".Receiver" />
     </application>
 
+    <receiver android:name=".Receiver" />
+
+    <service android:name=".Ringtone"
+        android:enabled="true">
+    </service>
+
 </manifest>

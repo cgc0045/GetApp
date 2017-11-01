@@ -1,6 +1,7 @@
 package com.example.carlos.getapp;
 
 import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -19,11 +20,12 @@ public class Alarm extends AppCompatActivity {
     //Create the alarm manager
     AlarmManager alarmMan;
     TimePicker alarmPick;
-    Toast updateText;
     Context context;
 
     CharSequence setText = "Alarm has been set at ";
     CharSequence turnOffText = "Alarm has been turned off";
+
+    PendingIntent pIntent;
 
 
     @Override
@@ -43,7 +45,7 @@ public class Alarm extends AppCompatActivity {
         Button onButton = (Button) findViewById(R.id.set);
         Button offButton = (Button) findViewById(R.id.end);
 
-        Intent intent = new Intent(context, Receiver.class);
+        final Intent intent = new Intent(context, Receiver.class);
 
         // Override the method when we click on the buttons
 
@@ -66,6 +68,10 @@ public class Alarm extends AppCompatActivity {
 
 
                 show_message(setText + alarmPick.getCurrentHour().toString() + ":" + minute);
+
+                pIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                alarmMan.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pIntent);
             }
         });
 
@@ -73,6 +79,8 @@ public class Alarm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 show_message(turnOffText);
+
+                alarmMan.cancel(pIntent);
             }
         });
     }
