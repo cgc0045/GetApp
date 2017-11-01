@@ -2,6 +2,7 @@ package com.example.carlos.getapp;
 
 import android.app.AlarmManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +42,8 @@ public class Alarm extends AppCompatActivity {
 
         Button onButton = (Button) findViewById(R.id.set);
         Button offButton = (Button) findViewById(R.id.end);
+
+        Intent intent = new Intent(context, Receiver.class);
 
         // Override the method when we click on the buttons
 
