@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -95,5 +97,27 @@ public class Alarm extends AppCompatActivity {
 
     private void set_alarm_text(String s){
         updateText.setText(s);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_alarm, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if (id == R.id.settings) {
+            //return true;
+            //lo ideal aquí sería hacer un intent para abrir una nueva clase como lo siguiente
+            Log.i("ActionBar", "Settings!");
+            Intent about = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(about);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
