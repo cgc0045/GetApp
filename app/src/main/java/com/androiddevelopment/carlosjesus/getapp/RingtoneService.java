@@ -1,7 +1,6 @@
 package com.androiddevelopment.carlosjesus.getapp;
 
 
-import android.app.AlarmManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,14 +9,10 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 
 
@@ -57,12 +52,21 @@ public class RingtoneService extends Service {
         SharedPreferences sh = PreferenceManager.getDefaultSharedPreferences(this);
         Uri uri = Uri.parse(sh.getString("notifications_new_message_ringtone", ""));
         //RingtoneManager rm = new RingtoneManager(RingtoneService.this);
+        Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         //All possibilities about the different options when the user press the buttons
 
         if(!isPlaying && flag){
 
             mediaPlayer = MediaPlayer.create(this, uri);
+
+            if (sh.getBoolean("notifications_new_message_vibrate", false)) {
+
+                long[] pattern = {0, 500, 500};
+
+                v.vibrate(pattern, 0);
+            }
+
 
             //If the mediaPlayer is null, catch the exception and use a ringtone that is stored in
             //RAW folder.
@@ -73,6 +77,8 @@ public class RingtoneService extends Service {
                 mediaPlayer.start();
             }
 
+            Log.e("Estado alarma", String.valueOf(mediaPlayer.equals(null)));
+
 
 
             isPlaying = true;
@@ -80,7 +86,7 @@ public class RingtoneService extends Service {
         }else if(isPlaying && !flag){
             mediaPlayer.stop();
             mediaPlayer.reset();
-
+            v.cancel();
             isPlaying = false;
             flag = false;
         }else if(isPlaying && flag){
@@ -103,7 +109,7 @@ public class RingtoneService extends Service {
 
         super.onDestroy();
         isPlaying = false;
-        ring.stop();
+        mediaPlayer.stop();
     }
 
 }
