@@ -56,17 +56,23 @@ public class RingtoneService extends Service {
 
         SharedPreferences sh = PreferenceManager.getDefaultSharedPreferences(this);
         Uri uri = Uri.parse(sh.getString("notifications_new_message_ringtone", ""));
-        ring = RingtoneManager.getRingtone(this, uri);
+        //RingtoneManager rm = new RingtoneManager(RingtoneService.this);
 
+        //All possibilities about the different options when the user press the buttons
 
         if(!isPlaying && flag){
-            //mediaPlayer = MediaPlayer.create(this, R.raw.dove);
-
-            Log.e("Ringtone", ring.toString());
 
             mediaPlayer = MediaPlayer.create(this, uri);
-            mediaPlayer.start();
-            //ring.play();
+
+            //If the mediaPlayer is null, catch the exception and use a ringtone that is stored in
+            //RAW folder.
+            try{
+                mediaPlayer.start();
+            }catch (NullPointerException e) {
+                mediaPlayer = MediaPlayer.create(this, R.raw.dove);
+                mediaPlayer.start();
+            }
+
 
 
             isPlaying = true;
@@ -74,8 +80,6 @@ public class RingtoneService extends Service {
         }else if(isPlaying && !flag){
             mediaPlayer.stop();
             mediaPlayer.reset();
-
-            //ring.stop();
 
             isPlaying = false;
             flag = false;
