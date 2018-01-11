@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.androiddevelopment.carlosjesus.getapp">
 
-
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -33,8 +33,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.androiddevelopment.carlosjesus.getapp.Alarm" />
         </activity>
+        <activity
+            android:name=".TurnOffAlarm"
+            android:label="@string/title_activity_turn_off_alarm"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
-
-    <uses-permission android:name="android.permission.VIBRATE"/>
 
 </manifest>
