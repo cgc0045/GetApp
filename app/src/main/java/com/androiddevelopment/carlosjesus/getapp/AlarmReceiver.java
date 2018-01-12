@@ -15,6 +15,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         //Fetch the extra variable from the intent
         boolean flag = intent.getExtras().getBoolean("extra");
 
+
+
         Log.e("Key received: ", String.valueOf(flag));
 
         //Intent to ringtone service
@@ -22,6 +24,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         //Pass the extra variable to the Ringtone Service
         ringIntent.putExtra("extra", flag);
+
+        if (intent.getExtras().containsKey("notification")){
+            ringIntent.putExtra("notification", intent.getExtras().getBoolean("notification"));
+        }
 
         //Start the service
         context.startService(ringIntent);

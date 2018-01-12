@@ -3,6 +3,7 @@
     package="com.androiddevelopment.carlosjesus.getapp">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -36,7 +37,8 @@
         <activity
             android:name=".TurnOffAlarm"
             android:label="@string/title_activity_turn_off_alarm"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".QuestionActivity"></activity>
     </application>
 
 </manifest>

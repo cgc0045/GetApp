@@ -80,79 +80,88 @@ public class RingtoneService extends Service {
 
         //All possibilities about the different options when the user press the buttons
 
-        if(!isPlaying && flag){
-
-            mediaPlayer = MediaPlayer.create(this, uri);
-
-            if (sh.getBoolean("notifications_new_message_vibrate", false)) {
-
-                long[] pattern = {0, 500, 500};
-
-                v.vibrate(pattern, 0);
-            }
-
-
-            //If the mediaPlayer is null, catch the exception and use a ringtone that is stored in
-            //RAW folder.
-            try{
-                mediaPlayer.start();
-            }catch (NullPointerException e) {
-                mediaPlayer = MediaPlayer.create(this, R.raw.dove);
-                mediaPlayer.start();
-            }
-
-            Log.e("Estado alarma", String.valueOf(mediaPlayer.equals(null)));
-
-            //Notification service
-            NotificationManager notify = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-            //Create an intent which goes to the Alarm class
-            Intent intent_alarm = new Intent(this.getApplicationContext(), Alarm.class);
-
-            PendingIntent p_intent_alarm = PendingIntent.getActivity(this, 0, intent_alarm, 0);
-
-            //If the API is 26 or greatter, create the channel and use it, else create the notification without the channel
-
-            Notification notification;
-
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                createNotifChannel(this);
-
-                notification = new Notification.Builder(this)
-                        .setContentTitle("An alarm is going off")
-                        .setContentText("Click me!")
-                        .setContentIntent(p_intent_alarm)
-                        .setAutoCancel(true)
-                        .setSmallIcon(R.drawable.settings)
-                        .setChannelId(NOTIF_CHANNEL_ID)
-                        .build();
-            } else{
-                notification = new Notification.Builder(this)
-                        .setContentTitle("An alarm is going off")
-                        .setContentText("Click me!")
-                        .setContentIntent(p_intent_alarm)
-                        .setAutoCancel(true)
-                        .setSmallIcon(R.drawable.settings)
-                        .build();
-            }
-
-            // Notification call command
-            notify.notify(0, notification);
-
-            isPlaying = true;
-            flag = false;
-        }else if(isPlaying && !flag){
+        if (intent.getExtras().containsKey("notification")){
             mediaPlayer.stop();
             mediaPlayer.reset();
             v.cancel();
             isPlaying = false;
             flag = false;
-        }else if(isPlaying && flag){
-            isPlaying = false;
-            flag = false;
-        }else if(!isPlaying && !flag){
-            isPlaying = true;
-            flag = true;
+        }else {
+
+            if (!isPlaying && flag) {
+
+                mediaPlayer = MediaPlayer.create(this, uri);
+
+                if (sh.getBoolean("notifications_new_message_vibrate", false)) {
+
+                    long[] pattern = {0, 500, 500};
+
+                    v.vibrate(pattern, 0);
+                }
+
+
+                //If the mediaPlayer is null, catch the exception and use a ringtone that is stored in
+                //RAW folder.
+                try {
+                    mediaPlayer.start();
+                } catch (NullPointerException e) {
+                    mediaPlayer = MediaPlayer.create(this, R.raw.dove);
+                    mediaPlayer.start();
+                }
+
+                Log.e("Estado alarma", String.valueOf(mediaPlayer.equals(null)));
+
+                //Notification service
+                NotificationManager notify = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                //Create an intent which goes to the Alarm class
+                Intent intent_alarm = new Intent(this.getApplicationContext(), TurnOffAlarm.class);
+
+                PendingIntent p_intent_alarm = PendingIntent.getActivity(this, 0, intent_alarm, 0);
+
+                //If the API is 26 or greatter, create the channel and use it, else create the notification without the channel
+
+                Notification notification;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    createNotifChannel(this);
+
+                    notification = new Notification.Builder(this)
+                            .setContentTitle("An alarm is going off")
+                            .setContentText("Click me!")
+                            .setContentIntent(p_intent_alarm)
+                            .setAutoCancel(true)
+                            .setSmallIcon(R.drawable.settings)
+                            .setChannelId(NOTIF_CHANNEL_ID)
+                            .build();
+                } else {
+                    notification = new Notification.Builder(this)
+                            .setContentTitle("An alarm is going off")
+                            .setContentText("Click me!")
+                            .setContentIntent(p_intent_alarm)
+                            .setAutoCancel(true)
+                            .setSmallIcon(R.drawable.settings)
+                            .build();
+                }
+
+                // Notification call command
+                notify.notify(0, notification);
+
+                isPlaying = true;
+                flag = false;
+            } else if (isPlaying && !flag) {
+                mediaPlayer.stop();
+                mediaPlayer.reset();
+                v.cancel();
+                isPlaying = false;
+                flag = false;
+            } else if (isPlaying && flag) {
+                isPlaying = false;
+                flag = false;
+            } else if (!isPlaying && !flag) {
+                isPlaying = true;
+                flag = true;
+            }
         }
 
 
