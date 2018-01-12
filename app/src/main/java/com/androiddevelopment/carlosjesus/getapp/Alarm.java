@@ -2,7 +2,6 @@ package com.androiddevelopment.carlosjesus.getapp;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -36,15 +35,15 @@ public class Alarm extends AppCompatActivity {
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         //Initialize the time picker
-        timePicker = (TimePicker) findViewById(R.id.selectHour);
+        timePicker = findViewById(R.id.selectHour);
 
-        updateText = (TextView) findViewById(R.id.updateText);
+        updateText = findViewById(R.id.updateText);
 
         final Calendar calendar = Calendar.getInstance();
 
         //Initialize the buttons
-        Button startAlarm = (Button) findViewById(R.id.alarmOn);
-        Button finishAlarm = (Button) findViewById(R.id.alarmOff);
+        Button startAlarm = findViewById(R.id.alarmOn);
+        Button finishAlarm = findViewById(R.id.alarmOff);
 
         //Intent to AlarmReceiver
         final Intent arIntent = new Intent(this.context, AlarmReceiver.class);
