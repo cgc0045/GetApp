@@ -86,8 +86,8 @@ public class RingtoneService extends Service {
             v.cancel();
             isPlaying = false;
             flag = false;
-        }else {
 
+        }else {
             if (!isPlaying && flag) {
 
                 mediaPlayer = MediaPlayer.create(this, uri);
@@ -150,9 +150,11 @@ public class RingtoneService extends Service {
                 isPlaying = true;
                 flag = false;
             } else if (isPlaying && !flag) {
-                mediaPlayer.stop();
-                mediaPlayer.reset();
-                v.cancel();
+
+
+                    final Intent csv = new Intent(this, QuestionActivity.class);
+                    startActivity(csv);
+                    v.cancel();
                 isPlaying = false;
                 flag = false;
             } else if (isPlaying && flag) {
