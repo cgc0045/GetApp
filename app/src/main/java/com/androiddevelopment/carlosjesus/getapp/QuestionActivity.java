@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -201,16 +202,34 @@ public class QuestionActivity extends AppCompatActivity {
     private void isCorrect(Button btn, String answer, String correct){
         if(answer.equals(correct)){
             btn.setBackgroundColor(Color.parseColor("#006400"));
-            setContentView(R.layout.activity_alarm);
+            Handler handler = new Handler();
+            final Intent mainscreen = new Intent(this, Alarm.class);
+
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    // acciones que se ejecutan tras los milisegundos
+                    startActivity(mainscreen);
+                    setContentView(R.layout.activity_alarm);
+                }
+            }, 1000);
             sendBroadcast(arIntent);
 
         }else{
+
+
             btn.setBackgroundColor(Color.RED);
 
             btn.setBackgroundColor(Color.TRANSPARENT);
-            while(!lol.isCancelled()) {
-                lol.cancel(true);
-            }
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+
+                    while(!lol.isCancelled()) {
+                        lol.cancel(true);
+                    }
+
+                }
+            }, 1000);
             lol = new GetQuestions();
             lol.execute();
         }
