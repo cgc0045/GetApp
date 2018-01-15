@@ -201,8 +201,9 @@ public class QuestionActivity extends AppCompatActivity {
     private void isCorrect(Button btn, String answer, String correct){
         if(answer.equals(correct)){
             btn.setBackgroundColor(Color.parseColor("#006400"));
-
+            setContentView(R.layout.activity_alarm);
             sendBroadcast(arIntent);
+
         }else{
             btn.setBackgroundColor(Color.RED);
 
