@@ -199,7 +199,7 @@ public class QuestionActivity extends AppCompatActivity {
         });
     }
 
-    private void isCorrect(Button btn, String answer, String correct){
+    private void isCorrect(final Button btn, String answer, String correct){
         if(answer.equals(correct)){
             btn.setBackgroundColor(Color.parseColor("#006400"));
             Handler handler = new Handler();
@@ -219,19 +219,26 @@ public class QuestionActivity extends AppCompatActivity {
 
             btn.setBackgroundColor(Color.RED);
 
-            btn.setBackgroundColor(Color.TRANSPARENT);
+
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 public void run() {
 
+                    btn.setBackgroundColor(Color.TRANSPARENT);
+                }
+            }, 500);
+
+            handler.postDelayed(new Runnable() {
+                public void run() {
                     while(!lol.isCancelled()) {
                         lol.cancel(true);
                     }
-
+                    lol = new GetQuestions();
+                    lol.execute();
                 }
-            }, 1000);
-            lol = new GetQuestions();
-            lol.execute();
+            }, 50);
+
+
         }
     }
 }
