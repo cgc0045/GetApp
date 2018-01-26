@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -38,7 +39,9 @@
             android:name=".TurnOffAlarm"
             android:label="@string/title_activity_turn_off_alarm"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".QuestionActivity"></activity>
+        <activity android:name=".QuestionActivity" />
+        <activity android:name=".Start" />
+        <activity android:name=".ConnectUsers"></activity>
     </application>
 
 </manifest>

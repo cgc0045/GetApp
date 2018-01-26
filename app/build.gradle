@@ -35,4 +35,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-analytics:11.4.0'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
     implementation files('libs/json-simple-1.1.jar')
+    implementation files('libs/mysql-connector-java-5.1.45-bin.jar')
 }
